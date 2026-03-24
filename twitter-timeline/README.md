@@ -34,7 +34,7 @@ python3 scripts/scraper.py -n 500 --following
 
 推荐池耗尽会自动刷新页面继续采。遇到 rate limit 自动等待。
 
-### 采集博主推文
+### 采集博主推文（近期，最多 3200 条）
 
 ```bash
 # 单个博主
@@ -44,7 +44,19 @@ python3 scripts/user_scraper.py @elonmusk
 python3 scripts/user_scraper.py @user1 @user2 @user3
 ```
 
-每人最多约 3200 条（Twitter API 上限）。
+### 采集博主全量推文（突破 3200 限制）
+
+通过 SearchTimeline API 按月分块搜索 `from:username`，绕过 UserTweets 的 3200 条上限。
+
+```bash
+# 从 2020 年 1 月开始采全量
+python3 scripts/full_scraper.py @dotey
+
+# 指定起始时间
+python3 scripts/full_scraper.py @dotey --since-year 2023 --since-month 6
+```
+
+自动按月分块，每月独立翻页，全局去重。
 
 ### 输出
 
