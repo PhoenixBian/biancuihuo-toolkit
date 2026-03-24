@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TOOLKIT_DIR="${TOOLKIT_DIR:-$(cd "$(dirname "$0")/.." && pwd)}"
+VERSION_FILE="$TOOLKIT_DIR/VERSION"
+REMOTE_URL="https://raw.githubusercontent.com/PhoenixBian/biancuihuo-toolkit/master/VERSION"
+STATE_DIR="$HOME/.biancuihuo"
+CACHE_FILE="$STATE_DIR/last-update-check"
+
+LOCAL=""
+if [ -f "$VERSION_FILE" ]; then
+  LOCAL="$(cat "$VERSION_FILE" | tr -d '[:space:]')"
+fi
+[ -z "$LOCAL" ] && exit 0
+
+# 缓存 60 分钟
+if [ -f "$CACHE_FILE" ]; then
+  STALE=$(find "$CACHE_FILE" -mmin +60 2>/dev/null || true)
+  [ -z "$STALE" ] && exit 0
+fi
+
+mkdir -p "$STATE_DIR"
+REMOTE="$(curl -sf --max-time 5 "$REMOTE_URL" 2>/dev/null || true)"
+REMOTE="$(echo "$REMOTE" | tr -d '[:space:]')"
+
+if ! echo "$REMOTE" | grep -qE '^[0-9]+\.[0-9.]+$'; then
+  echo "$LOCAL" > "$CACHE_FILE"
+  exit 0
+fi
+
+if [ "$LOCAL" = "$REMOTE" ]; then
+  echo "$LOCAL" > "$CACHE_FILE"
+  exit 0
+fi
+
+echo "UPGRADE_AVAILABLE $LOCAL $REMOTE"
+echo "$LOCAL" > "$CACHE_FILE"
