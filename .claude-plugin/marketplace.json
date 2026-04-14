@@ -1,0 +1,43 @@
+{
+  "name": "biancuihuo-toolkit",
+  "owner": {
+    "name": "PhoenixBian"
+  },
+  "metadata": {
+    "description": "边淬火工具箱。用 Claude Code 创业过程中写的工具，顺手开源。"
+  },
+  "plugins": [
+    {
+      "name": "feynman-learning",
+      "source": {
+        "source": "github",
+        "repo": "PhoenixBian/feynman-learning"
+      },
+      "description": "Feynman-method learning engine. AI writes lectures, then becomes a difficult listener who catches every gap in real-time. Three modes: curiosity, craft, problem-solving.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "liars-dice",
+      "source": {
+        "source": "github",
+        "repo": "PhoenixBian/liars-dice"
+      },
+      "description": "Liar's Dice trainer. Practice probability math, play AI opponents with different personalities, track your ELO rating. Supports Chinese rules.",
+      "version": "0.1.0"
+    },
+    {
+      "name": "recall",
+      "source": {
+        "source": "github",
+        "repo": "PhoenixBian/recall"
+      },
+      "description": "Search and resume past Claude Code sessions in seconds. CLI + browser GUI + Claude Code skill."
+    },
+    {
+      "name": "biancuihuo-toolkit",
+      "source": ".",
+      "description": "Twitter timeline scraper via CDP. Collect For You / Following feeds and full user timelines.",
+      "version": "0.1.0"
+    }
+  ]
+}
